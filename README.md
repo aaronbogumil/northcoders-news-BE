@@ -1,3 +1,3 @@
 # NC News Seeding
 
-- Instructions for this sprint can be found at https://l2c.northcoders.com/courses/be/seeding-nc-news
+- Set up a .env file by creating a new file and naming it ".env.", then either "test" or "development". type "PGBASE="and then your database name you want it to run.
