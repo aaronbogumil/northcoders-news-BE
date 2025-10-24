@@ -13,26 +13,29 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
   .then(()=>{
     const formattedTopics = topicData.map((topic)=> {return [topic.slug, topic.description, topic.img_url]})
     const sqlString = format("INSERT INTO topics(slug, description, img_url) VALUES %L", formattedTopics)
-    console.log(sqlString)
     return db.query(sqlString)
   })
     .then(()=>{
     const formattedUsers = userData.map((user)=> {return [user.username, user.name, user.avatar_url]})
     const sqlString = format("INSERT INTO users(username, name, avatar_url) VALUES %L", formattedUsers)
-    console.log(sqlString)
     return db.query(sqlString)
   })
   .then(()=>{
     const formattedArticles = articleData.map((article)=> {
       const timestampObj = convertTimestampToDate(article)
       return [article.title, article.topic, article.author, article.body, timestampObj.created_at, article.votes, article.article_img_url]})
-    const sqlString = format("INSERT INTO articles(title, topic, author, body, created_at, votes, article_img_url) VALUES %L", formattedArticles)
+    const sqlString = format("INSERT INTO articles(title, topic, author, body, created_at, votes, article_img_url) VALUES %L RETURNING *", formattedArticles)
     return db.query(sqlString)
   })
-  .then(()=>{
-    const formattedComments = commentData.map((Comment)=> {
-      const timestampObj = convertTimestampToDate(Comment)
-      return [Comment.article_id, Comment.body, Comment.votes, Comment.author, timestampObj.created_at]})
+  .then(({rows: insertedArticles})=>{
+    const lookUp = insertedArticles.reduce((lookUp, article)=>{
+      return {...lookUp, [article.title]: article.article_id}
+    }, {}
+  )
+
+    const formattedComments = commentData.map((comment)=> {
+      const timestampObj = convertTimestampToDate(comment)
+      return [lookUp[comment.article_title], comment.body, comment.votes, comment.author, timestampObj.created_at]})
     const sqlString = format("INSERT INTO comments(article_id, body, votes, author, created_at) VALUES %L", formattedComments)
     return db.query(sqlString)
   })
