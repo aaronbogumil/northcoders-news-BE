@@ -8,7 +8,7 @@
     "seed-dev": "node ./db/seeds/run-seed.js",
     "test": "jest --runInBand",
     "prepare": "husky install",
-    "start": "node listen.js",
+    "start": "nodemon listen.js",
     "test-seed": "jest seed.test.js",
     "test-utils": "jest utils.test.js",
     "test-app": "jest app.test.js"
@@ -34,6 +34,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "jest-sorted": "^1.0.11",
     "pg": "^8.13.3",
     "pg-format": "^1.0.4"
   },
