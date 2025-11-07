@@ -1,10 +1,10 @@
-const express = require("express")
+const express = require("express");
 const app = express();
 const db = require("./db/connection");
 
 app.use(express.json());
 
-app.use('/api', express.static('./public'))
+app.use(express.static("./public"));
 
 app.get("/", (req, res) => {
   res.send("Connected at endpoint: /");
