@@ -119,7 +119,7 @@ describe("GET /api/articles/:article_id", () => {
         });
       });
   });
-   test.skip("should respond with 400 error when given an invalid type for an index ", () => {
+   test("should respond with 400 error when given an invalid type for an index ", () => {
     return request(app)
       .get("/api/articles/not_an_index")
       .expect(400)

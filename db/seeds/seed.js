@@ -32,7 +32,7 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     .then(() => {
       const formattedTopics = topicData.map((topic) => {
         return [topic.slug, topic.description, topic.img_url];
-      });console.log(formattedTopics)
+      });
       const sqlString = format("INSERT INTO topics(slug, description, img_url) VALUES %L", formattedTopics);
       return db.query(sqlString);
     })
