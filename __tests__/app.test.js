@@ -74,6 +74,7 @@ describe("GET /api/articles", () => {
           expect(article).toMatchObject({
             author: expect.any(String),
             title: expect.any(String),
+            body: expect.any(String),
             article_id: expect.any(Number),
             topic: expect.any(String),
             votes: expect.any(Number),
